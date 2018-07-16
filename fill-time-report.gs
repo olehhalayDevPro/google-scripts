@@ -48,8 +48,10 @@ function updateMyDailyReport(report) {
     report.forEach(function (row) {
       currentSheet.appendRow(row);     
     });
-  
-  currentSheet.getRange(lastRow + 1, 1, report.length).setNumberFormat('dd-MMM-yyyy');
+ 
+  if(report.length !== 0) {
+    currentSheet.getRange(lastRow + 1, 1, report.length).setNumberFormat('dd-MMM-yyyy');
+  }
 }
 
 function getDailyReport(fromDocumentId){
