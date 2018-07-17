@@ -42,7 +42,7 @@ function updateMyDailyReport(report) {
   var currentDoc = SpreadsheetApp.getActive();
   var currentSheet = currentDoc.getSheets()[0];
   
-  var lastRow = currentSheet.getLastRow();
+  var lastRow = getLastRowFromDocument(currentSheet);
   
   currentSheet.get
     report.forEach(function (row) {
@@ -51,6 +51,16 @@ function updateMyDailyReport(report) {
  
   if(report.length !== 0) {
     currentSheet.getRange(lastRow + 1, 1, report.length).setNumberFormat('dd-MMM-yyyy');
+  }
+}
+
+function getLastRowFromDocument(sheet) {
+  var table = sheet.getDataRange().getValues();
+  
+  for(i = 2; i < sheet.getLastRow(); ++i) {
+    if(table[i][0] === '') {
+      return ++i;
+    }
   }
 }
 
