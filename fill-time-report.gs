@@ -39,19 +39,19 @@ function formatReport(report) {
 
 
 function updateMyDailyReport(report) {
+  if(report.length === 0)
+     return;
+  
   var currentDoc = SpreadsheetApp.getActive();
   var currentSheet = currentDoc.getSheets()[0];
   
   var lastRow = getLastRowFromDocument(currentSheet);
-  
-  currentSheet.get
-    report.forEach(function (row) {
-      currentSheet.appendRow(row);     
-    });
+
+  currentSheet
+    .getRange(lastRow, 1, report.length, report[0].length)
+    .setValues(report);
  
-  if(report.length !== 0) {
-    currentSheet.getRange(lastRow + 1, 1, report.length).setNumberFormat('dd-MMM-yyyy');
-  }
+  currentSheet.getRange(lastRow + 1, 1, report.length).setNumberFormat('dd-MMM-yyyy');
 }
 
 function getLastRowFromDocument(sheet) {
